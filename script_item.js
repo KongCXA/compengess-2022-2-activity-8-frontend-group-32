@@ -5,7 +5,7 @@ let itemsData;
 
 // TODO #2.1: Edit group number
 const getGroupNumber = () => {
-  return 99;
+  return 32;
 };
 
 // TODO #2.2: Show group members
@@ -29,6 +29,7 @@ const showGroupMembers = async () => {
           `;
         // ----------------- FILL IN YOUR CODE UNDER THIS AREA ONLY ----------------- //
         member_dropdown.innerHTML += ``;
+        
         // ----------------- FILL IN YOUR CODE ABOVE THIS AREA ONLY ----------------- //
       });
     })
