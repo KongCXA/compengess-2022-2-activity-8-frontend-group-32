@@ -37,31 +37,40 @@ const getUserProfile = async () => {
 //            and display the result on the webpage
 const getCompEngEssCid = async () => {
   await fetch(`http://${backendIPAddress}/courseville/get_courses`, {
-          method: "GET",
-          credentials: "include",
-      })
-      .then((response) => response.json())
-      .then(
-          ({data}) =>
-          (document.getElementById("ces-cid-value").innerHTML =
-              data.student.find((course) => course.course_no === "2110221").cv_cid));
-};
+    method: "GET",
+    credentials: "include",
+  })
+    .then((response) => response.json())
+    .then(
+      ({ data }) =>
+        (document.getElementById("ces-cid-value").innerHTML = data.student.find(
+          (course) => course.course_no === "2110221"
+        ).cv_cid)
+    );
 };
 
 // TODO #3.5: Send Get Course Assignments ("GET") request with cv_cid to backend server
 //            and create Comp Eng Ess assignments table based on the response (itemid, title)
+response(itemid, title);
 const createCompEngEssAssignmentTable = async () => {
   const table_body = document.getElementById("main-table-body");
   table_body.innerHTML = "";
   const cv_cid = document.getElementById("ces-cid-value").innerHTML;
-
-  console.log(
-    "This function should fetch 'get course assignments' route from backend server and show assignments in the table."
-  );
+  await fetch(
+    `http://${backendIPAddress}/courseville/get_course_assignments/${cv_cid}`,
+    {
+      method: "GET",
+      credentials: "include",
+    }
+  )
+    .then((response) => response.json())
+    .then(({ data }) => {
+      data.map((assignment) => {
+        table_body.innerHTML += `
+         <tr>
+           <td>${assignment.itemid}</td>
+           <td>${assignment.title}</td>
+        </tr> `;
+      });
+    });
 };
-
-const logout = async () => {
-  window.location.href = `http://${backendIPAddress}/courseville/logout`;
-};
-
-document.getElementById("group-id").innerHTML = getGroupNumber();
